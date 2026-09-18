@@ -7,8 +7,7 @@ import BoxContext from "../../hooks/BoxContext.js"
 import Dropdown from "../components/Dropdown.jsx"
 
 export default () => {
-    const [normCoord, setNormCoord] = useState({x: "uninitialized", y: "uninitialized"})
-    const [boxPos, setBoxPos] = useState()
+    const [normCoord, setNormCoord] = useState({x: "N/A", y: "N/A"})
     
     const waldoRef = useRef()
     const headerRef = useRef()
@@ -18,23 +17,19 @@ export default () => {
     const boxSize = 4;
 
     function handleClick(e) {
-        setNormCoord({
-            x: (e.pageX - e.target.offsetLeft) / e.target.width,
-            y: (e.pageY - e.target.offsetTop) / e.target.height
-        })
-        if (!boxPos) {
-            setBoxPos({
-                x: e.pageX/window.innerWidth,
-                y: e.pageY/window.innerHeight
+        if (normCoord.x == "N/A") {
+            setNormCoord({
+                x: (e.pageX - e.target.offsetLeft) / e.target.width,
+                y: (e.pageY - e.target.offsetTop) / e.target.height
             })
             setImgSize({
                 width: e.target.width,
                 height: e.target.height
             })
         }
-        else {
-            setBoxPos()
-        }
+        else 
+            setNormCoord({x: "N/A", y: "N/A"})
+        
     }
 
     useEffect(() => {
@@ -75,7 +70,7 @@ export default () => {
                     ref={waldoRef}
                 />
                 {
-                    boxPos && 
+                    normCoord.x != "N/A" && 
                     <BoxContext value={[styles, waldoRef, normCoord, imgSize]}>
                         <BoxClick boxSize={boxSize}/>
                         <Dropdown boxSize={boxSize} names={["luffy", "zoro", "sanji"]}/>
