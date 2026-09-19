@@ -6,12 +6,17 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
+    "testSetup": "NODE_ENV=test prisma migrate deploy && prisma generate && NODE_ENV=test npm run seed",
+    "devSetup": "prisma migrate deploy && prisma generate && npm run seed",
     "seed": "node scripts/seedGame.js"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.0"
   },
   "devDependencies": {

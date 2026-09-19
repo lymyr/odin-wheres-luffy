@@ -52,7 +52,11 @@ try {
     console.log("Finished :)")
 }
 catch(e) {
-    console.error(e)
+    // ignore if already created
+    if (e.code != "P2002")
+        console.error(e)
+    else 
+        console.log("Game has already been created")
 }
 finally {
     prisma.$disconnect()

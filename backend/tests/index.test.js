@@ -1,3 +1,56 @@
-test("test", () => {
-    expect(4).toBe(4)
+import request from "supertest"
+import jwt from "jsonwebtoken"
+import app from "../app.js";
+import { prisma } from "../lib/prisma.js";
+
+afterEach(() => {
+  jest.restoreAllMocks();
+  jest.useRealTimers()
+});
+
+afterAll(async () => {
+    await prisma.$disconnect()
+})
+
+test("returns JWT with startDate, gameId, and sessionId", async () => {
+    jest.useFakeTimers({
+        doNotFake: [
+            'hrtime',
+            'nextTick',
+            'performance',
+            'queueMicrotask',
+            'requestAnimationFrame',
+            'cancelAnimationFrame',
+            'requestIdleCallback',
+            'cancelIdleCallback',
+            'setImmediate',
+            'clearImmediate',
+            'setInterval',
+            'clearInterval',
+            'setTimeout',
+            'clearTimeout',
+            'Temporal'
+        ]
+    })
+    
+    const mockedJwt = jest.spyOn(jwt, "sign")
+    mockedJwt.mockReturnValue(123)
+
+    const res = await request(app)
+        .get("/1")
+
+    expect(mockedJwt).toHaveBeenCalledWith({
+        startDate: new Date(),
+        gameId: expect.anything(),
+        persons: expect.any(Array),
+        sessionId: expect.anything()
+    }, expect.anything(), expect.anything())
+
+    expect(res.body).toEqual({
+        data: {
+            startDate: expect.any(String),
+            persons: expect.any(Array),
+            token: 123,
+        }
+    })
 })
