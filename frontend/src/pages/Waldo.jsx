@@ -5,14 +5,38 @@ import { useState } from "react"
 import BoxClick from "../components/BoxClick"
 import BoxContext from "../../hooks/BoxContext.js"
 import Dropdown from "../components/Dropdown.jsx"
+import useWindowSize from "../hooks/useWindowSize.js"
+import Dialog from "../components/Dialog.jsx"
+import Header from "../components/Header.jsx"
 
+
+// todo: add give up button
 export default () => {
     const [normCoord, setNormCoord] = useState({x: "N/A", y: "N/A"})
+    const [imgSize, setImgSize] = useState()
+    const [names, setNames] = useState([
+        {
+            name: "Luffy",
+            found: false
+        },
+        {
+            name: "Zoro",
+            found: false
+        },
+        {
+            name: "Sanji",
+            found: false
+        },
+        {
+            name: "Waldo",
+            found: false
+        },
+    ])
     
     const waldoRef = useRef()
-    const headerRef = useRef()
-    const [imgSize, setImgSize] = useState()
-    const [wSize, setWSize] = useState(window.innerWidth)
+    const dialogRef = useRef()
+    
+    const wSize = useWindowSize()
 
     const boxSize = 4;
 
@@ -28,40 +52,26 @@ export default () => {
             })
         }
         else 
-            setNormCoord({x: "N/A", y: "N/A"})
-        
+            resetCoord()
+    }
+
+    function resetCoord() {
+        setNormCoord({x: "N/A", y: "N/A"})
     }
 
     useEffect(() => {
-        if (waldoRef)
-            setImgSize({
-                width: waldoRef.current.width,
-                height: waldoRef.current.height
-            })
+        setImgSize({
+            width: waldoRef.current.width,
+            height: waldoRef.current.height
+        })
     }, [wSize])
-
-    useEffect(() => {
-        function handleWindowSizeChange () {
-            setWSize({width: window.innerWidth, height: window.innerHeight});
-        };
-        window.addEventListener('resize', handleWindowSizeChange);
-        return () => {
-            window.removeEventListener('resize', handleWindowSizeChange);
-        };
-    }, []);
 
 
     return (
         <>
-            <header style={{backgroundColor: "white"}} ref={headerRef}>
-                <div>
-                    <img />
-                    <p>Luffy</p>
-                </div>
-                <div >
-                    {normCoord.x}, {normCoord.y}
-                </div>
-            </header>
+            {/* todo: add pictures to header & indicator if person is already found */}
+           <Header normCoord={normCoord} names={names}/>
+           
             <main>
                 <img 
                     src={oneWally} 
@@ -71,13 +81,22 @@ export default () => {
                 />
                 {
                     normCoord.x != "N/A" && 
-                    <BoxContext value={[styles, waldoRef, normCoord, imgSize]}>
+                    <BoxContext value={[styles, waldoRef, normCoord, imgSize, resetCoord]}>
                         <BoxClick boxSize={boxSize}/>
-                        <Dropdown boxSize={boxSize} names={["luffy", "zoro", "sanji"]}/>
+                        {/* todo: make names depend on api */}
+                        <Dropdown boxSize={boxSize} names={names} setNames={setNames}/>
                     </BoxContext>
                 }
             </main>
             
+            {/* placeholder for username prompt after game */}
+            <Dialog ref={dialogRef} handleClick={() => {}}>
+                <div>
+                    <label htmlFor="username">Username</label>
+                    <input id="username" />
+                </div>
+            </Dialog>
+            <button onClick={() => dialogRef.current.showModal()}>Open</button>
         </>
         
     )

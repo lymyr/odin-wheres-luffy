@@ -32,6 +32,7 @@ header {
 
 .dropdown {
     background-color: white;
+    border-radius: 4px;
 }
 
 .dropdown ul,
@@ -39,4 +40,22 @@ header {
     list-style: none;
     margin: 0;
     padding:0;
+}
+
+.dropdown ul {
+    margin-top: 8px;
+}
+
+.dropdown > p {
+    margin: 4px 8px;
+    text-align: center;
+}
+
+.dropdown li {
+    padding: 4px 8px;
+}
+
+.dropdown li:hover {
+    background-color: rgb(217, 217, 255);
+    cursor: pointer;
 }
