@@ -18,7 +18,7 @@ describe("POST /:gameId", () => {
             gameId: 1,
             persons: ["Luffy", "Zoro", "Sanji", "Waldo"],
             sessionId: "any",
-            startDate: new Date()
+            startTime: new Date()
         }
         jest.spyOn(jwt, "verify").mockReturnValue(submissionData)
         jest.spyOn(jwt, "sign").mockReturnValue("signedToken")
@@ -38,7 +38,7 @@ describe("POST /:gameId", () => {
             gameId: 1,
             persons: ["Luffy", "Zoro", "Sanji", "Waldo"],
             sessionId: "any",
-            startDate: new Date()
+            startTime: new Date()
         }
         jest.spyOn(jwt, "verify").mockReturnValue(submissionData)
         jest.spyOn(jwt, "sign").mockReturnValue("signedToken")

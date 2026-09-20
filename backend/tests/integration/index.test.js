@@ -40,7 +40,7 @@ test("returns JWT with startDate, gameId, and sessionId", async () => {
         .get("/v1/1")
 
     expect(mockedJwt).toHaveBeenCalledWith({
-        startDate: new Date(),
+        startTime: new Date(),
         gameId: expect.anything(),
         persons: expect.any(Array),
         sessionId: expect.anything()

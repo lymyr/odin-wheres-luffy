@@ -3,9 +3,9 @@ import jwt from "jsonwebtoken"
 process.loadEnvFile()
 
 export const getStartGame = (req, res) => {
-    const startDate = new Date()
+    const startTime = new Date()
     const token = jwt.sign({
-        startDate,
+        startTime,
         gameId: req.game.id,
         persons: req.game.persons,
         sessionId: req.sessionID
