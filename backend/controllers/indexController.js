@@ -13,8 +13,6 @@ export const getStartGame = (req, res) => {
 
     res.json({
         data: {
-            startDate,
-            persons: req.game.persons,
             token
         }
     })

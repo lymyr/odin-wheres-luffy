@@ -13,8 +13,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true
 }))
+app.use(express.json())
 
-app.use("/", indexRouter)
+app.use("/v1", indexRouter)
 
 if (process.env.NODE_ENV != "test")
     app.listen(process.env.PORT, () => {

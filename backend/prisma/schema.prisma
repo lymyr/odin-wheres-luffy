@@ -12,7 +12,7 @@ datasource db {
   provider = "postgresql"
 }
 
-model Highscore {
+model Leaderboard {
   id Int @id @default(autoincrement())
   name String
   startTime DateTime
@@ -24,7 +24,7 @@ model Highscore {
 model Game {
   id Int @id @default(autoincrement())
   name String
-  highScores Highscore[]
+  highScores Leaderboard[]
   persons Person[]
 }
 

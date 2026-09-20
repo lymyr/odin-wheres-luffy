@@ -2,10 +2,15 @@ import { param, validationResult } from "express-validator"
 import { prisma } from "../lib/prisma.js"
 
 export function throwerHelper (req, res, next) {
+    let errorCode = 400;
+    if (req.statusCode)
+        errorCode = req.statusCode
+
     const errors = validationResult(req)
     if (errors.isEmpty())
         return next()
-    res.json({
+
+    res.status(errorCode).json({
         error: errors.mapped()
     })
 }
@@ -21,8 +26,11 @@ export class GameValidation extends Validation {
         .isInt().withMessage("gameId should be an integer").toInt().bail()
         .custom(async (id, {req}) => {
             const game = await prisma.game.findFirst({where: {id}, include: { persons: true }})
-            if (!game)
+            if (!game) {
+                req.statusCode = 404
                 throw new Error("Game not found")
+            }
+                
             req.game = game
         })
 }

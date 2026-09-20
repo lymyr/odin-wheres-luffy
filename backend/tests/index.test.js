@@ -37,7 +37,7 @@ test("returns JWT with startDate, gameId, and sessionId", async () => {
     mockedJwt.mockReturnValue(123)
 
     const res = await request(app)
-        .get("/1")
+        .get("/v1/1")
 
     expect(mockedJwt).toHaveBeenCalledWith({
         startDate: new Date(),
@@ -48,9 +48,24 @@ test("returns JWT with startDate, gameId, and sessionId", async () => {
 
     expect(res.body).toEqual({
         data: {
-            startDate: expect.any(String),
-            persons: expect.any(Array),
             token: 123,
         }
     })
 })
+
+describe("Returns error for invalid gameId", () => {
+    test("string gameId", async () => {
+        const res = await request(app)
+            .get("/v1/abc")
+
+        expect(res.statusCode).toBe(400)
+    })
+
+    test("no game found", async () => {
+        const res = await request(app)
+            .get("/v1/999999999")
+        
+        expect(res.statusCode).toBe(404)
+    })
+})
+
