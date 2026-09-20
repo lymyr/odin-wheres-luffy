@@ -1,4 +1,4 @@
-import { param, validationResult } from "express-validator"
+import { body, param, validationResult } from "express-validator"
 import { prisma } from "../lib/prisma.js"
 
 export function throwerHelper (req, res, next) {
@@ -10,9 +10,17 @@ export function throwerHelper (req, res, next) {
     if (errors.isEmpty())
         return next()
 
-    res.status(errorCode).json({
+    let payload = {
         error: errors.mapped()
-    })
+    }
+    if (req.body?.token)
+        payload = {
+            ...payload,
+            data: {
+                token: req.body.token
+            }
+        }
+    res.status(errorCode).json(payload)
 }
 
 class Validation {
@@ -33,4 +41,9 @@ export class GameValidation extends Validation {
                 
             req.game = game
         })
+}
+
+export class usernameValidation extends Validation {
+    static username = body("username").trim().notEmpty().withMessage("Please add a username")
+        .isLength({max: 14}).withMessage("Username should not exceed 14 characters")
 }

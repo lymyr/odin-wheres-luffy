@@ -5,6 +5,8 @@ import { prisma } from "../../lib/prisma.js"
 
 afterEach(async () => {
     jest.clearAllMocks()
+    await prisma.leaderboard.deleteMany()
+    await prisma.$disconnect()
 })
 
 const createLeaderboard = jest.spyOn(prisma.leaderboard, "create")
@@ -22,14 +24,33 @@ describe("POST /:gameId/leaderboard", () => {
                 username: "testUser",
                 token: "token"
             })
-        console.log(res.body)
+
         expect(createLeaderboard.mock.calls).toHaveLength(0)
         expect(res.body.data.token).toBe("token")
         
         jwtVerifyMock.mockRestore()
     })
 
-    test.skip("sends leaderboard of user with place order if persons is empty", async () => {
+    test("sends leaderboard row of user if persons is empty", async () => {
+        const jwtVerifyMock = jest.spyOn(jwt, "verify").mockReturnValue({
+            gameId: 1,
+            persons: [],
+            startDate: new Date(2000, 1)
+        })
+        const res = await request(app)
+            .post("/v1/1/leaderboard")
+            .send({
+                    username: "testUser",
+                    token: "token"
+            })
+        expect(createLeaderboard.mock.calls).toHaveLength(1)
+        expect(res.body.data).toEqual({
+            user: expect.anything(),
+        })
+        jwtVerifyMock.mockRestore()
+    })
+
+    test("reject if username is empty", async () => {
         const jwtVerifyMock = jest.spyOn(jwt, "verify").mockReturnValue({
             gameId: 1,
             persons: []
@@ -37,20 +58,37 @@ describe("POST /:gameId/leaderboard", () => {
         const res = await request(app)
             .post("/v1/1/leaderboard")
             .send({
-                body: {
-                    username: "testUser",
-                    token: "token"
-                }
+                username: "",
+                token: "token"
             })
-        expect(createLeaderboard.mock.calls).toHaveLength(1)
-        expect(res.body.data).toEqual({
-            leaderboard: jest.any(Array),
-            place: jest.any(Number)
+        expect(createLeaderboard.mock.calls).toHaveLength(0)
+        expect(res.body.data.token).toBe("token")
+        jwtVerifyMock.mockRestore()
+    })
+
+    test("reject if username is long", async () => {
+        const jwtVerifyMock = jest.spyOn(jwt, "verify").mockReturnValue({
+            gameId: 1,
+            persons: []
         })
+        const res = await request(app)
+            .post("/v1/1/leaderboard")
+            .send({
+                username: "sadfb kasjdbf kjasdhbfkjsadh bfaskjdhfbasdj fsjadbh",
+                token: "token"
+            })
+        expect(createLeaderboard.mock.calls).toHaveLength(0)
+        expect(res.body.data.token).toBe("token")
         jwtVerifyMock.mockRestore()
     })
 })
 
-test("GET /:gameId/leaderboard", () => {
+test("GET /:gameId/leaderboard", async () => {
+    const prismaMock = jest.spyOn(prisma.leaderboard, "findMany")
 
+    const res = await request(app)
+        .get("/v1/1/leaderboard")
+
+    expect(prismaMock.mock.calls).toHaveLength(1)
+    expect(res.body.data.leaderboard).toBeDefined()
 })
