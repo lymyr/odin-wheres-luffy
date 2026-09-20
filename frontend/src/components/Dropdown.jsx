@@ -1,8 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import BoxContext from "../hooks/BoxContext.js"
+import TokenContext from "../hooks/TokenContext.js"
+import useSubmit from "../hooks/useSubmit.js"
 
 export default ({boxSize, names}) => {
     const [styles, waldoRef, normCoord, imgSize, resetCoord] = useContext(BoxContext)
+    const [token, setToken] = useContext(TokenContext)
+    const submit = useSubmit()
     const [popupLocX, setPopupLocX] = useState()
     const [popupLocY, setPopupLocY] = useState()
     const dropdownRef = useRef()
@@ -13,7 +17,7 @@ export default ({boxSize, names}) => {
     }, [])
 
     async function handleClick(name) {
-        // todo: add fetch post here and perhaps change name to id in the future
+        await submit(normCoord, name)
         console.log(normCoord, name)
         resetCoord()
     }
@@ -30,7 +34,7 @@ export default ({boxSize, names}) => {
             <p>Options</p>
             <ul>
                 {names.map(name => {
-                    return <li key={name.name} onClick={() => handleClick(name.name)}>{name.name}</li>
+                    return <li key={name.name} onClick={async () => handleClick(name.name)}>{name.name}</li>
                 })}
             </ul>
         </div>

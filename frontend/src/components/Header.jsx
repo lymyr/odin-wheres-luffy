@@ -7,10 +7,10 @@ export default ({
             style={{backgroundColor: "white"}}
         >
             <ul>
-                {names.map(name => {
+                {names?.map(name => {
                     return (
                         // todo: change class name if found
-                        <li className="" key={name.name}>
+                        <li className="" key={name.id}>
                             <img />
                             <p>{name.name}</p>
                         </li>

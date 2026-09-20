@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useContext, useEffect, useRef } from "react"
 import oneWally from "../assets/oneWally.png"
 import styles from "./Waldo.module.css"
 import { useState } from "react"
@@ -8,30 +8,16 @@ import Dropdown from "../components/Dropdown.jsx"
 import useWindowSize from "../hooks/useWindowSize.js"
 import Dialog from "../components/Dialog.jsx"
 import Header from "../components/Header.jsx"
+import TokenContext from "../hooks/TokenContext.js"
+import { useNavigate } from "react-router"
 
 
 // todo: add give up button
 export default () => {
+    const [token, setToken] = useContext(TokenContext)
+    const nav = useNavigate()
     const [normCoord, setNormCoord] = useState({x: "N/A", y: "N/A"})
     const [imgSize, setImgSize] = useState()
-    const [names, setNames] = useState([
-        {
-            name: "Luffy",
-            found: false
-        },
-        {
-            name: "Zoro",
-            found: false
-        },
-        {
-            name: "Sanji",
-            found: false
-        },
-        {
-            name: "Waldo",
-            found: false
-        },
-    ])
     
     const waldoRef = useRef()
     const dialogRef = useRef()
@@ -66,11 +52,15 @@ export default () => {
         })
     }, [wSize])
 
+    useEffect(() => {
+        if (!token)
+            nav("/")
+    }, [])
 
     return (
         <>
             {/* todo: add pictures to header & indicator if person is already found */}
-           <Header normCoord={normCoord} names={names}/>
+           <Header normCoord={normCoord} names={token?.data.persons}/>
            
             <main>
                 <img 
@@ -84,7 +74,7 @@ export default () => {
                     <BoxContext value={[styles, waldoRef, normCoord, imgSize, resetCoord]}>
                         <BoxClick boxSize={boxSize}/>
                         {/* todo: make names depend on api */}
-                        <Dropdown boxSize={boxSize} names={names} setNames={setNames}/>
+                        <Dropdown boxSize={boxSize} names={token?.data.persons} />
                     </BoxContext>
                 }
             </main>

@@ -1,6 +1,15 @@
-import { NavLink } from "react-router"
+import { useNavigate } from "react-router"
+import useGetToken from "../hooks/useGetToken.js"
 
 export default () => {
+    const nav = useNavigate()
+    const getToken = useGetToken()
+
+    async function handleGetToken() {
+        await getToken()
+        nav("/sail")
+    }
+
     return (
         <div>
             <div>
@@ -8,9 +17,7 @@ export default () => {
                 <h1>Luffy</h1>
             </div>
             <div>
-                <NavLink to="/sail">
-                    <button>Sail the seas!</button>
-                </NavLink>
+                <button onClick={async () => await handleGetToken()}>Sail the seas!</button>
                 <p>Let's go find Luffy!</p>
             </div>
         </div>
