@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import BoxContext from "../../hooks/BoxContext"
+import BoxContext from "../hooks/BoxContext"
 
 export default ({boxSize=4}) => {
     const [styles, waldoRef, normCoord, imgSize] = useContext(BoxContext)
