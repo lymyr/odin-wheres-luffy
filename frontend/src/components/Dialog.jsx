@@ -1,6 +1,5 @@
 import { useContext, useState } from "react"
 import TokenContext from "../hooks/TokenContext"
-import { useNavigate } from "react-router"
 import getCurrentTime from "../helpers/getCurrentTime"
 
 export default ({
@@ -11,7 +10,6 @@ export default ({
 }) => {
     const [username, setUsername] = useState()
     const [token, setToken] = useContext(TokenContext)
-    const nav = useNavigate()
 
     async function submitScore() {
         const url = import.meta.env.PROD ? import.meta.env.VITE_API_URL : `http://localhost:${import.meta.env.VITE_LOCALHOST_PORT}`
