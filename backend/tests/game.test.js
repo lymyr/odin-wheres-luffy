@@ -24,7 +24,7 @@ afterEach(() => {
     jest.restoreAllMocks()
 })
 
-describe("Post /:gameId", () => {
+describe("POST /:gameId", () => {
     test("accepts submission data and returns jwt response", async () => {
         const submissionData = {
             gameId: 1,
@@ -87,6 +87,7 @@ describe("answer verification middleware", () => {
             json: () => {}
         }
         await checkAnswer(req, res, jest.fn())
+        console.log(req.decodedToken.persons)
         expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "abc"])
     })
 
@@ -187,6 +188,21 @@ describe("answer verification middleware", () => {
     })
 })
 
-describe("leaderboard", () => {
-    
+describe("POST /:gameId/leaderboard", () => {
+    test("sends token back if persons not empty", async () => {
+        jest.spyOn(jwt, "verify").mockReturnValue({
+            gameId: 1,
+            persons: ["gojo", "optimum pride", "lol", "abc"]
+        })
+
+        const res = await request(app)
+            .post("/1/leaderboard")
+            .send({
+                body: {
+                    token: "token"
+                }
+            })
+        
+        expect(res.body.data.token).toBe("token")
+    })
 })

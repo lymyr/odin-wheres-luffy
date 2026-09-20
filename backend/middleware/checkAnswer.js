@@ -18,7 +18,7 @@ export default async function (req, res, next) {
             if (person != req.body.person) 
                 filteredPersons.push(person)  
         }
-        req.decodedToken.persons = [filteredPersons]
+        req.decodedToken.persons = filteredPersons
         return next()
     }
     
