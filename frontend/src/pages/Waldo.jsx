@@ -17,12 +17,10 @@ export default () => {
     const nav = useNavigate()
     const [normCoord, setNormCoord] = useState({x: "N/A", y: "N/A"})
     const [imgSize, setImgSize] = useState()
-    
+
     const waldoRef = useRef()
     const dialogRef = useRef()
-    
     const wSize = useWindowSize()
-
     const boxSize = 4;
 
     function handleClick(e) {
@@ -54,7 +52,9 @@ export default () => {
     useEffect(() => {
         if (!token)
             nav("/")
-    }, [])
+        else if (token.data.persons.length == 0)
+            nav("/sail/leaderboard")
+    }, [token])
 
     return (
         <>
@@ -78,13 +78,7 @@ export default () => {
                 }
             </main>
             
-            {/* placeholder for username prompt after game */}
-            <Dialog ref={dialogRef} handleClick={() => {}}>
-                <div>
-                    <label htmlFor="username">Username</label>
-                    <input id="username" />
-                </div>
-            </Dialog>
+            
             <button onClick={() => dialogRef.current.showModal()}>Open</button>
         </>
         

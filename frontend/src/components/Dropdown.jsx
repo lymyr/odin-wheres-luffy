@@ -16,7 +16,6 @@ export default ({boxSize, names}) => {
 
     async function handleClick(name) {
         await submit(normCoord, name)
-        console.log(normCoord, name)
         resetCoord()
     }
 

@@ -12,12 +12,13 @@ export default () => {
 
     return (
         <div>
-            <div>
+            <header>
                 <h1>Where's</h1>
                 <h1>Luffy</h1>
-            </div>
+            </header>
             <div>
                 <button onClick={async () => await handleGetToken()}>Sail the seas!</button>
+                <button onClick={() => nav("/sail/leaderboard")}>Leaderboard</button>
                 <p>Let's go find Luffy!</p>
             </div>
         </div>

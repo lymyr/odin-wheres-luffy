@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react"
-import {format} from "date-fns"
+import getCurrentTime from "../helpers/getCurrentTime.js"
 export default ({ normCoord, tokenData }) => {
-    const [time, setTime] = useState(0.00)
+    const [time, setTime] = useState()
     useEffect(() => {
-        if (tokenData) {
+        if (tokenData && tokenData.persons.length > 0) {
             const interval = setInterval(() => {
-                const now = format(new Date(), "T")
-                const start = format(new Date(tokenData.startTime), "T")
-                const current = `${parseFloat((now - start) / 1000).toFixed(2)}s`
-                setTime(current)
+                setTime(getCurrentTime(tokenData.startTime, new Date()))
             }, 50)
             return () => clearInterval(interval)
         }
-    }, [])
+        else
+            setTime("0.00")
+    }, [tokenData])
 
     
 
