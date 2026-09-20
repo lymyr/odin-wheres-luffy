@@ -15,7 +15,7 @@ export default async function (req, res, next) {
     ) {
         const filteredPersons = []
         for (const person of req.decodedToken.persons) {
-            if (person != req.body.person) 
+            if (person.name != req.body.person) 
                 filteredPersons.push(person)  
         }
         req.decodedToken.persons = filteredPersons
