@@ -3,7 +3,7 @@ import { prisma } from "../lib/prisma.js"
 export const addLeaderboard = async (req, res) => {
     const user = await prisma.leaderboard.create({data: {
         name: req.body.username,
-        startTime: req.decodedToken.startDate,
+        startTime: req.decodedToken.startTime,
         endTime: new Date(),
         gameId: req.decodedToken.gameId
     }})
