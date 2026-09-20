@@ -75,7 +75,7 @@ describe("POST /:gameId", () => {
         })
         const submissionData = {
             gameId: 1,
-            persons: ["Luffy"],
+            persons: [{name: "Luffy"}],
             sessionId: "any",
             startTime: new Date(),
             exp: "exp",

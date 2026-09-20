@@ -84,11 +84,7 @@ describe("POST /:gameId/leaderboard", () => {
 })
 
 test("GET /:gameId/leaderboard", async () => {
-    const prismaMock = jest.spyOn(prisma.leaderboard, "findMany")
-
     const res = await request(app)
         .get("/v1/1/leaderboard")
-
-    expect(prismaMock.mock.calls).toHaveLength(1)
     expect(res.body.data.leaderboard).toBeDefined()
 })

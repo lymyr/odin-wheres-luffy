@@ -15,7 +15,7 @@ describe("answer verification middleware", () => {
         const req = {
             decodedToken: {
                 gameId: 1,
-                persons: ["gojo", "optimum pride", "lol", "abc"]  
+                persons: [{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}]  
             },
             body: {
                 person: "lol",
@@ -31,14 +31,14 @@ describe("answer verification middleware", () => {
             json: () => {}
         }
         await checkAnswer(req, res, jest.fn())
-        expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "abc"])
+        expect(req.decodedToken.persons).toEqual([{name: "gojo"}, {name: "optimum pride"},{name:"abc"}] )
     })
 
     test("persons arr doesnt change due lower xPos", async () => {
         const req = {
             decodedToken: {
                 gameId: 1,
-                persons: ["gojo", "optimum pride", "lol", "abc"]  
+                persons: [{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}] 
             },
             body: {
                 person: "lol",
@@ -55,14 +55,14 @@ describe("answer verification middleware", () => {
         }
         await checkAnswer(req, res, jest.fn())
 
-        expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "lol", "abc"])
+        expect(req.decodedToken.persons).toEqual([{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}] )
     })
 
     test("persons arr doesnt change due higher xPos", async () => {
         const req = {
             decodedToken: {
                 gameId: 1,
-                persons: ["gojo", "optimum pride", "lol", "abc"]  
+                persons: [{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}]  
             },
             body: {
                 person: "lol",
@@ -79,14 +79,14 @@ describe("answer verification middleware", () => {
         }
         await checkAnswer(req, res, jest.fn())
 
-        expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "lol", "abc"])
+        expect(req.decodedToken.persons).toEqual([{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}] )
 
     })
     test("persons arr doesnt change due lower yPos", async () => {
         const req = {
             decodedToken: {
                 gameId: 1,
-                persons: ["gojo", "optimum pride", "lol", "abc"]  
+                persons: [{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}]  
             },
             body: {
                 person: "lol",
@@ -103,14 +103,14 @@ describe("answer verification middleware", () => {
         }
         await checkAnswer(req, res, jest.fn())
 
-        expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "lol", "abc"])
+        expect(req.decodedToken.persons).toEqual([{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}] )
     })
 
     test("persons arr doesnt change due higher yPos", async () => {
         const req = {
             decodedToken: {
                 gameId: 1,
-                persons: ["gojo", "optimum pride", "lol", "abc"]  
+                persons: [{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}]  
             },
             body: {
                 person: "lol",
@@ -127,6 +127,6 @@ describe("answer verification middleware", () => {
         }
         await checkAnswer(req, res, jest.fn())
 
-        expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "lol", "abc"])
+        expect(req.decodedToken.persons).toEqual([{name: "gojo"}, {name: "optimum pride"},{name: "lol"},{name:"abc"}] )
     })
 })
