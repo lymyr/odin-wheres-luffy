@@ -67,7 +67,7 @@ describe("answer verification middleware", () => {
             body: {
                 person: "lol",
                 token: "jwtToken",
-                coords: {x: 0.66, y: 0.21}
+                coords: {x: 0.69, y: 0.21}
             }
         }
 
@@ -91,7 +91,7 @@ describe("answer verification middleware", () => {
             body: {
                 person: "lol",
                 token: "jwtToken",
-                coords: {x: 0.66, y: 0.21}
+                coords: {x: 0.67, y: 0.20}
             }
         }
 
@@ -115,7 +115,7 @@ describe("answer verification middleware", () => {
             body: {
                 person: "lol",
                 token: "jwtToken",
-                coords: {x: 0.66, y: 0.21}
+                coords: {x: 0.67, y: 0.23}
             }
         }
 
