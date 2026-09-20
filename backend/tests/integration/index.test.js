@@ -1,7 +1,7 @@
 import request from "supertest"
 import jwt from "jsonwebtoken"
-import app from "../app.js";
-import { prisma } from "../lib/prisma.js";
+import app from "../../app.js";
+import { prisma } from "../../lib/prisma.js";
 
 afterEach(() => {
   jest.restoreAllMocks();

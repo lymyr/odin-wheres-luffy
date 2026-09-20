@@ -1,70 +1,14 @@
-import app from "../app"
-import request from "supertest"
-import jwt from "jsonwebtoken"
-import { prisma } from "../lib/prisma.js"
-import checkAnswer from "../middleware/checkAnswer.js"
+import { prisma } from "../../lib/prisma.js"
+import checkAnswer from "../../middleware/checkAnswer.js"
 
-
-beforeEach(() => {
-    jest.spyOn(prisma.person, "findFirst").mockResolvedValue({
-        name: "lol",
-        xMinPos: 0.67,
-        xMaxPos: 0.671,
-        yMinPos: 0.204,
-        yMaxPos: 0.21
-    })
+jest.spyOn(prisma.person, "findFirst").mockResolvedValue({
+    name: "lol",
+    xMinPos: 0.67,
+    xMaxPos: 0.671,
+    yMinPos: 0.204,
+    yMaxPos: 0.21,
 })
 
-afterAll(async () => {
-    await prisma.leaderboard.deleteMany()
-    await prisma.$disconnect()
-})
-
-afterEach(() => {
-    jest.restoreAllMocks()
-})
-
-describe("POST /:gameId", () => {
-    test("accepts submission data and returns jwt response", async () => {
-        const submissionData = {
-            gameId: 1,
-            persons: ["gojo", "optimum pride", "lol", "abc"],
-            sessionId: "any",
-            startDate: new Date()
-        }
-        jest.spyOn(jwt, "verify").mockReturnValue(submissionData)
-        jest.spyOn(jwt, "sign").mockReturnValue("signedToken")
-
-        const res = await request(app)
-            .post("/v1/1")
-            .send({
-                person: "lol",
-                coords: {x: 0.67, y: 0.21},
-                token: "token"
-            })
-        expect(res.body.data.token).toEqual("signedToken") 
-    })
-   
-    test("returns the same token for incorrect coords", async () => {
-        const submissionData = {
-            gameId: 1,
-            persons: ["gojo", "optimum pride", "lol", "abc"],
-            sessionId: "any",
-            startDate: new Date()
-        }
-        jest.spyOn(jwt, "verify").mockReturnValue(submissionData)
-        jest.spyOn(jwt, "sign").mockReturnValue("signedToken")
-
-        const res = await request(app)
-            .post("/v1/1")
-            .send({
-                person: "lol",
-                coords: {x: 0.69, y: 0.21},
-                token: "token"
-            })
-        expect(res.body.data.token).toEqual("token") 
-    })
-})
 
 describe("answer verification middleware", () => {
     test("pops person within coords", async () => {
@@ -87,7 +31,6 @@ describe("answer verification middleware", () => {
             json: () => {}
         }
         await checkAnswer(req, res, jest.fn())
-        console.log(req.decodedToken.persons)
         expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "abc"])
     })
 
@@ -185,24 +128,5 @@ describe("answer verification middleware", () => {
         await checkAnswer(req, res, jest.fn())
 
         expect(req.decodedToken.persons).toEqual(["gojo", "optimum pride", "lol", "abc"])
-    })
-})
-
-describe("POST /:gameId/leaderboard", () => {
-    test("sends token back if persons not empty", async () => {
-        jest.spyOn(jwt, "verify").mockReturnValue({
-            gameId: 1,
-            persons: ["gojo", "optimum pride", "lol", "abc"]
-        })
-
-        const res = await request(app)
-            .post("/1/leaderboard")
-            .send({
-                body: {
-                    token: "token"
-                }
-            })
-        
-        expect(res.body.data.token).toBe("token")
     })
 })
