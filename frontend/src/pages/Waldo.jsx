@@ -18,7 +18,6 @@ export default () => {
     const [imgSize, setImgSize] = useState()
 
     const waldoRef = useRef()
-    const dialogRef = useRef()
     const wSize = useWindowSize()
     const boxSize = 4;
 
@@ -76,9 +75,6 @@ export default () => {
                     </BoxContext>
                 }
             </main>
-            
-            
-            <button onClick={() => dialogRef.current.showModal()}>Open</button>
         </>
         
     )
