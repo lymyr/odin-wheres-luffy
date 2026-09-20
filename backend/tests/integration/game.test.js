@@ -52,5 +52,63 @@ describe("POST /:gameId", () => {
             })
         expect(res.body.data.token).toEqual("token") 
     })
+
+    test("returns endDate if user got the last person correctly", async () => {
+        jest.useFakeTimers({
+            doNotFake: [
+                'hrtime',
+                'nextTick',
+                'performance',
+                'queueMicrotask',
+                'requestAnimationFrame',
+                'cancelAnimationFrame',
+                'requestIdleCallback',
+                'cancelIdleCallback',
+                'setImmediate',
+                'clearImmediate',
+                'setInterval',
+                'clearInterval',
+                'setTimeout',
+                'clearTimeout',
+                'Temporal'
+            ]
+        })
+        const submissionData = {
+            gameId: 1,
+            persons: ["Luffy"],
+            sessionId: "any",
+            startTime: new Date(),
+            exp: "exp",
+            iat: "iat"
+        }
+        jest.spyOn(jwt, "verify").mockReturnValue(submissionData)
+
+        const mockedJwt = jest.spyOn(jwt, "sign")
+        mockedJwt.mockReturnValue(123)
+
+        const res = await request(app)
+            .post("/v1/1")
+            .send({
+                person: "Luffy",
+                coords: {x: 0.51, y: 0.13},
+                token: "token"
+            })
+
+        expect(mockedJwt).toHaveBeenCalledWith({
+            startTime: expect.any(Date),
+            endTime: new Date(),
+            gameId: expect.anything(),
+            persons: expect.any(Array),
+            sessionId: expect.anything(),
+            iat: expect.anything(),
+            exp: expect.anything(),
+        }, expect.anything())
+
+        expect(res.body).toEqual({
+            data: {
+                token: 123,
+            }
+        })
+    })
 })
 
