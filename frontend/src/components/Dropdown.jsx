@@ -1,11 +1,9 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import BoxContext from "../hooks/BoxContext.js"
-import TokenContext from "../hooks/TokenContext.js"
 import useSubmit from "../hooks/useSubmit.js"
 
 export default ({boxSize, names}) => {
     const [styles, waldoRef, normCoord, imgSize, resetCoord] = useContext(BoxContext)
-    const [token, setToken] = useContext(TokenContext)
     const submit = useSubmit()
     const [popupLocX, setPopupLocX] = useState()
     const [popupLocY, setPopupLocY] = useState()

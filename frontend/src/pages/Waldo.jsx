@@ -12,9 +12,8 @@ import TokenContext from "../hooks/TokenContext.js"
 import { useNavigate } from "react-router"
 
 
-// todo: add give up button
 export default () => {
-    const [token, setToken] = useContext(TokenContext)
+    const [token] = useContext(TokenContext)
     const nav = useNavigate()
     const [normCoord, setNormCoord] = useState({x: "N/A", y: "N/A"})
     const [imgSize, setImgSize] = useState()
@@ -60,7 +59,7 @@ export default () => {
     return (
         <>
             {/* todo: add pictures to header & indicator if person is already found */}
-           <Header normCoord={normCoord} names={token?.data.persons}/>
+           <Header normCoord={normCoord} tokenData={token?.data}/>
            
             <main>
                 <img 
