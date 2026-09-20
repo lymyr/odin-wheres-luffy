@@ -1,6 +1,7 @@
 import express from "express"
 import session from "express-session"
 import indexRouter from "./routes/indexRouter.js"
+import cors from "cors"
 
 process.loadEnvFile()
 
@@ -14,6 +15,7 @@ app.use(session({
     saveUninitialized: true
 }))
 app.use(express.json())
+app.use(cors())
 
 app.use("/v1", indexRouter)
 
