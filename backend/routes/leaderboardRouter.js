@@ -1,14 +1,16 @@
 import { Router } from "express";
-import isValidJwt from "../middleware/isValidJwt";
+import isValidJwt from "../middleware/isValidJwt.js";
+import personsIsEmpty from "../middleware/personsIsEmpty.js";
 
 const leaderboardRouter = Router({mergeParams: true})
 
 leaderboardRouter.get("/",
-    isValidJwt
+    (req, res) => {res.json({placeholder : 1})}
 )
 
 leaderboardRouter.post("/",
-    isValidJwt
+    isValidJwt,
+    personsIsEmpty
 )
 
 export default leaderboardRouter
