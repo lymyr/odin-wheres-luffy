@@ -24,5 +24,6 @@ export default () => {
             token: json.data.token,
             data: jwtDecode(json.data.token)
         })
+        return jwtDecode(json.data.token)
     }
 }

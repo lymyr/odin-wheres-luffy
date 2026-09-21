@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import BoxContext from "../hooks/BoxContext.js"
 import useSubmit from "../hooks/useSubmit.js"
 
-export default ({boxSize, names}) => {
+export default ({boxSize, names, setFound, found}) => {
     const [styles, waldoRef, normCoord, imgSize, resetCoord] = useContext(BoxContext)
     const submit = useSubmit()
     const [loading, setLoading] = useState(false)
@@ -20,7 +20,9 @@ export default ({boxSize, names}) => {
     async function handleClick(name) {
         if (!loading) {
             setLoading(true)
-            await submit(normCoord, name)
+            const data = await submit(normCoord, name)
+            if (data.persons.length < names.length) 
+                setFound([...found, { coords: normCoord }]);
             setLoading(false)
             resetCoord()
         }

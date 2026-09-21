@@ -1,0 +1,7 @@
+.box {
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    border: clamp(2px, 0.5vw, 8px) solid rgb(153, 227, 154);
+    border-radius: 2px;
+}

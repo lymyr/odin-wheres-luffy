@@ -9,12 +9,15 @@ import useWindowSize from "../hooks/useWindowSize.js"
 import Header from "../components/Header.jsx"
 import TokenContext from "../hooks/TokenContext.js"
 import { useNavigate } from "react-router"
+import FoundMarker from "../components/FoundMarker.jsx"
 
 
 export default () => {
     const [token] = useContext(TokenContext)
     const nav = useNavigate()
     const [normCoord, setNormCoord] = useState({x: "N/A", y: "N/A"})
+    const [found, setFound] = useState([])
+
     const [imgSize, setImgSize] = useState()
 
     const waldoRef = useRef()
@@ -68,8 +71,15 @@ export default () => {
                     (normCoord.x != "N/A" || normCoord.y != "N/A") && 
                     <BoxContext value={[styles, waldoRef, normCoord, imgSize, resetCoord]}>
                         <BoxClick boxSize={boxSize}/>
-                        <Dropdown boxSize={boxSize} names={token?.data.persons} />
+                        <Dropdown boxSize={boxSize} names={token?.data.persons} setFound={setFound} found={found}/>
                     </BoxContext>
+                }
+                {
+                    found.length > 0 && found.map((m, i) => {
+                        console.log(found)
+                        return <FoundMarker coords={m.coords} imgSize={imgSize} waldoRef={waldoRef} key={i}/>
+                    })
+                    
                 }
             </main>
         </>
