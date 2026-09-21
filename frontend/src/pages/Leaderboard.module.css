@@ -31,6 +31,7 @@
     gap: 8px;
     user-select: none;
     transition: color 300ms, stroke 300ms, transform 200ms;
+    will-change: color, transform;
 }
 
 .headerTxt > div:hover {
@@ -40,6 +41,7 @@
 }
 
 .headerTxt svg {
+    will-change: stroke;
     width: 2rem;
     stroke: white;
 }
