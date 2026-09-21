@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import TokenContext from "../hooks/TokenContext"
-import getCurrentTime from "../helpers/getCurrentTime"
+import getCurrentTime, { getDurationMs } from "../helpers/getCurrentTime"
 import styles from "./Dialog.module.css"
 
 export default ({
@@ -31,15 +31,9 @@ export default ({
             if (res.ok) {
                 setToken()
                 setLeaderboard([...leaderboard, json.data.user].sort((a, b) => {
-                    const timeA = parseFloat(getCurrentTime(a.startTime, a.endTime))
-                    const timeB = parseFloat(getCurrentTime(b.startTime, b.endTime))
-
-                    if (timeA > timeB)
-                        return 1
-                    else if (timeA < timeB)
-                        return -1
-                    else
-                        return 0
+                    const timeA = getDurationMs(a.startTime, a.endTime)
+                    const timeB = getDurationMs(b.startTime, b.endTime)
+                    return timeA - timeB
                 }))
                 ref.current.close()
             }

@@ -1,11 +1,14 @@
-import { format } from "date-fns"
-
 export default (from, to) => {
-    const start = format(new Date(from), "T")
-    const end = format(new Date(to), "T")
-    const min = (parseFloat((end - start) / 1000)/60).toFixed(0)
-    const sec = (parseFloat((end - start) / 1000)%60).toFixed(2)
-    const current = `${min}m ${sec}s`
+    const start = new Date(from).getTime()
+    const end = new Date(to).getTime()
+    
+    const totalSeconds = (end - start) / 1000
+    const min = Math.floor(totalSeconds / 60)
+    const sec = (totalSeconds % 60).toFixed(2)
+    
+    return `${min}m ${sec}s`
+}
 
-    return current
+export function getDurationMs(from, to) {
+    return new Date(to).getTime() - new Date(from).getTime()
 }

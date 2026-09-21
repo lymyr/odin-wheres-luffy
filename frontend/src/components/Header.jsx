@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import getCurrentTime from "../helpers/getCurrentTime.js"
+import styles from "./Header.module.css"
+
 export default ({ normCoord, tokenData }) => {
     const [time, setTime] = useState()
     useEffect(() => {
@@ -16,9 +18,7 @@ export default ({ normCoord, tokenData }) => {
     
 
     return (
-        <header 
-            style={{backgroundColor: "white"}}
-        >
+        <header  className={styles.header}>
             <div>
                 <p>Time</p>
                 <p>{time}</p>
