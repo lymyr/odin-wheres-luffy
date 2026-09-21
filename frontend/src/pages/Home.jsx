@@ -2,7 +2,9 @@ import { useNavigate } from "react-router"
 import useGetToken from "../hooks/useGetToken.js"
 import styles from "./Home.module.css"
 import { useState } from "react"
-import gif from "../../public/scuba-cat.gif"
+import gif from "../assets/scuba-cat.gif"
+import bgMobile from "../assets/bg-mobile.webp"
+import bgDesk from "../assets/bg-desktop.webp"
 
 export default () => {
     const nav = useNavigate()
@@ -31,9 +33,9 @@ export default () => {
         <>
              <picture className={styles.bg}>
                 <source
-                    srcset="../../public/bg-mobile.webp"
+                    srcset={bgMobile}
                     media="(orientation: portrait)" />
-                <img src="../../public/bg-desktop.webp"/>
+                <img src={bgDesk}/>
             </picture>
 
             <div className={styles.home}>
