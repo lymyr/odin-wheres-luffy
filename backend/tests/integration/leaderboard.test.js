@@ -35,7 +35,8 @@ describe("POST /:gameId/leaderboard", () => {
         const jwtVerifyMock = jest.spyOn(jwt, "verify").mockReturnValue({
             gameId: 1,
             persons: [],
-            startTime: new Date(2000, 1)
+            startTime: new Date(2000, 1),
+            endTime: new Date(2000, 2)
         })
         const res = await request(app)
             .post("/v1/1/leaderboard")
