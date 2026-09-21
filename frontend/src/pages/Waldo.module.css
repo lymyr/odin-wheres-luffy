@@ -6,7 +6,7 @@
 }
 
 /* todo: edit for mobile */
-main {
+/* main {
     margin-top: 40px;
     margin-inline: 20px;
 }
@@ -15,7 +15,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
-}
+} */
 
 .dropdown,
 .box {

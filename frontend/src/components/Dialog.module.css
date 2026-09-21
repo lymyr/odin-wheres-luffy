@@ -1,0 +1,45 @@
+.dialog {
+    border: none;
+    border-radius: 4px;
+    padding-top: 0;
+    bottom: 20vh;
+    width: 250px;
+}
+
+.title {
+    margin-bottom: 16px;
+    border-bottom: 1px solid gray;
+    padding-block: 8px;
+    font-size: 1.3rem;
+}
+
+.score {
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.inputLabel {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap:4px;
+}
+
+div:has(.inputLabel) {
+    display: flex;
+    flex-direction: column;
+    gap:6px
+}
+
+.error {
+    color: rgb(118, 27, 27)
+}
+
+.btnContainer {
+    margin-top: 12px;
+    margin-bottom: 6px;
+    margin-left: auto;
+    display: flex;
+    width: fit-content;
+    gap: 8px;
+}

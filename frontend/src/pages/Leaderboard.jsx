@@ -5,26 +5,30 @@ import Dialog from "../components/Dialog"
 import TokenContext from "../hooks/TokenContext"
 
 export default () => {
-    const [state, setState] = useState("loading")
     const [leaderboard, setLeaderboard] = useState([])
+    const [state, setState] = useState(leaderboard.length > 0 ? "done" : "loading")
     const dialogRef = useRef()
     const [token] = useContext(TokenContext)
 
     useEffect(() => {
         let controller = new AbortController();
 
-        if (token?.data.persons.length == 0) 
-            dialogRef.current.showModal();
-
-        (async () => {
-            const url = import.meta.env.PROD ? import.meta.env.VITE_API_URL : `http://localhost:${import.meta.env.VITE_LOCALHOST_PORT}`
-            const res = await fetch(`${url}/v1/1/leaderboard`, {
-                signal: controller.signal
-            })
-            const json = await res.json()
-            setLeaderboard(json.data.leaderboard)
-        })()
-
+        try {
+            if (token?.data.persons.length == 0) 
+                dialogRef.current.showModal();
+            (async () => {
+                const url = import.meta.env.PROD ? import.meta.env.VITE_API_URL : `http://localhost:${import.meta.env.VITE_LOCALHOST_PORT}`
+                const res = await fetch(`${url}/v1/1/leaderboard`, {
+                    signal: controller.signal
+                })
+                const json = await res.json()
+                setLeaderboard(json.data.leaderboard)
+            })()
+            setState("done")
+        }
+        catch(e) {
+            setState("error")
+        }
         
         return () => controller.abort()
     }, [])
@@ -41,20 +45,29 @@ export default () => {
                 </div>
             </header>
             <main>
-                <ol>
-                    {
-                        leaderboard.map(row => {
-                            return (
-                                <li key={row.id}>
-                                    <p>{row.name}</p>
-                                    <p>{getCurrentTime(row.startTime, row.endTime)}</p>
-                                </li>
-                            )
-                        })
-                    }
-                </ol>
+                {
+                    state == "done" ?
+                        <ol>
+                        {
+                            leaderboard.map(row => {
+                                return (
+                                    <li key={row.id}>
+                                        <p>{row.name}</p>
+                                        <p>{getCurrentTime(row.startTime, row.endTime)}</p>
+                                    </li>
+                                )
+                            })
+                        }
+                        </ol>
+
+                    // todo: improve in the future
+                    : state == "error" ?
+                        <h1>Someting went wrong :(</h1>
+                    :
+                        <h1>Loading</h1>
+                }
             </main>
-            {/* placeholder for username prompt after game */}
+
             <Dialog 
                 ref={dialogRef} 
                 title="Submit Score"

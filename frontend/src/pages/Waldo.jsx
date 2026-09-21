@@ -70,7 +70,6 @@ export default () => {
                     normCoord.x != "N/A" && 
                     <BoxContext value={[styles, waldoRef, normCoord, imgSize, resetCoord]}>
                         <BoxClick boxSize={boxSize}/>
-                        {/* todo: make names depend on api */}
                         <Dropdown boxSize={boxSize} names={token?.data.persons} />
                     </BoxContext>
                 }
