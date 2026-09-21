@@ -1,0 +1,111 @@
+.leaderboardRoot {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    padding-inline: 40px;
+    margin: auto;
+    margin-block: 32px;
+}
+
+.header img {
+    width: 100%;
+    border-radius: 4px;
+    margin: auto;
+    margin-bottom: 12px;
+}
+
+.header {
+    text-align: center;
+}
+
+.headerTxt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headerTxt > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    user-select: none;
+    transition: color 300ms, stroke 300ms, transform 200ms;
+}
+
+.headerTxt > div:hover {
+    color: rgb(208, 208, 255);
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.headerTxt svg {
+    width: 2rem;
+    stroke: white;
+}
+
+.headerTxt > div:hover svg {
+    stroke: rgb(208, 208, 255);
+}
+
+.headerTxt h1 {
+    font-family: oswald;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+}
+
+.main {
+    position: relative;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.main ol {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.main li div {
+    display: flex;
+    justify-content: space-between;
+    gap:12px;
+}
+
+.main li p:first-child {
+    text-wrap: nowrap;
+}
+
+.spinner {
+    composes: spinner from '../components/Dialog.module.css';
+    left: 50%;
+    translate: -50%;
+    --size: 60px;
+    --border-size: 12px;
+}
+
+@media screen and (min-width: 600px) {
+    .main {
+        font-size: 1.3rem;
+    }
+
+    .header h1 {
+        font-size: 4rem;
+    }
+    .headerTxt svg {
+        width: 3rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+    .headerTxt > div {
+        gap: 4px
+    }
+    .headerTxt svg {
+        width: 1.5rem;
+    }
+}
