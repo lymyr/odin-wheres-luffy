@@ -14,8 +14,12 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true
 }))
+
+const corsOptions = process.env.ORIGINS ? 
+    { origin: process.env.ORIGINS.split(",") } : { origin: "*" }
+
 app.use(express.json())
-app.use(cors())
+app.use(cors(corsOptions))
 
 app.use("/v1", indexRouter)
 
