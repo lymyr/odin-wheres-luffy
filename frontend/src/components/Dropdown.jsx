@@ -5,6 +5,7 @@ import useSubmit from "../hooks/useSubmit.js"
 export default ({boxSize, names}) => {
     const [styles, waldoRef, normCoord, imgSize, resetCoord] = useContext(BoxContext)
     const submit = useSubmit()
+    const [loading, setLoading] = useState(false)
     const [popupLocX, setPopupLocX] = useState()
     const [popupLocY, setPopupLocY] = useState()
     const [tOrigin, setTOrigin] = useState("center top")
@@ -17,8 +18,12 @@ export default ({boxSize, names}) => {
     }, [])
 
     async function handleClick(name) {
-        await submit(normCoord, name)
-        resetCoord()
+        if (!loading) {
+            setLoading(true)
+            await submit(normCoord, name)
+            setLoading(false)
+            resetCoord()
+        }
     }
 
     return (
@@ -34,7 +39,11 @@ export default ({boxSize, names}) => {
             <p>Options</p>
             <ul>
                 {names.map(name => {
-                    return <li key={name.name} onClick={async () => handleClick(name.name)}>{name.name}</li>
+                    return <li 
+                        key={name.name} 
+                        onClick={async () => handleClick(name.name)}
+                        className={loading ? styles.dropdownLoading : undefined}
+                    >{name.name}</li>
                 })}
             </ul>
         </div>

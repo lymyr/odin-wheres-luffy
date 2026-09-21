@@ -34,6 +34,8 @@
 
 
 .dropdown {
+    --drpdwn-inline-space: 12px;
+    --drpdwn-block-space: 4px;
     background-color: var(--main-color);
     border-radius: 4px;
     will-change: transform, opacity;
@@ -50,13 +52,11 @@
     padding:0;
 }
 
-.dropdown ul {
-    margin-top: 8px;
-}
-
 .dropdown > p {
-    margin-inline: 12px;
+    margin-inline: var(--drpdwn-inline-space);
     padding-block: 4px;
+    margin-bottom: var(--drpdwn-block-space);
+
     text-align: center;
     font-family: oswald;
     font-size: 1.1rem;
@@ -65,13 +65,18 @@
 }
 
 .dropdown li {
-    padding: 8px 12px;
+    padding: var(--drpdwn-block-space) var(--drpdwn-inline-space);
     font-size: 0.9rem;
+    user-select: none;
 }
 
-.dropdown li:hover {
+.dropdown li:not(.dropdownLoading):hover {
     background-color: rgb(79, 83, 113);
-    cursor: pointer;
+     cursor: pointer;
+}
+
+.dropdownLoading {
+    color: rgb(144, 144, 144);
 }
 
 @keyframes pop {
@@ -105,5 +110,17 @@
 @media screen and (max-width: 700px) {
     .main {
         margin-inline: 4px;
+    }
+
+    .dropdown {
+        --drpdwn-inline-space: 4px;
+        --drpdwn-block-space: 2px;
+    }
+    .dropdown > p {
+        font-size: 0.6rem;
+    }
+
+    .dropdown li {
+        font-size: 0.5rem;
     }
 }

@@ -11,51 +11,61 @@ export default ({
 }) => {
     const [username, setUsername] = useState()
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
     const [token, setToken] = useContext(TokenContext)
     const score = token ? getCurrentTime(token.data.startTime, token.data.endTime) : 0
 
     async function submitScore() {
-        try {
-            const url = import.meta.env.PROD ? import.meta.env.VITE_API_URL : `http://localhost:${import.meta.env.VITE_LOCALHOST_PORT}`
-            const res = await fetch(`${url}/v1/${token.data.gameId}/leaderboard`, {
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify({
-                    username,
-                    token: token.token
-                }),
-                method: "post"
-            })
-            const json = await res.json()
-            if (res.ok) {
-                setToken()
-                setLeaderboard([...leaderboard, json.data.user].sort((a, b) => {
-                    const timeA = getDurationMs(a.startTime, a.endTime)
-                    const timeB = getDurationMs(b.startTime, b.endTime)
-                    return timeA - timeB
-                }))
-                ref.current.close()
+        setLoading(true)
+        if (!loading) {
+            try {
+                const url = import.meta.env.PROD ? import.meta.env.VITE_API_URL : `http://localhost:${import.meta.env.VITE_LOCALHOST_PORT}`
+                const res = await fetch(`${url}/v1/${token.data.gameId}/leaderboard`, {
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        token: token.token
+                    }),
+                    method: "post"
+                })
+                const json = await res.json()
+                if (res.ok) {
+                    setToken()
+                    setLeaderboard([...leaderboard, json.data.user].sort((a, b) => {
+                        const timeA = getDurationMs(a.startTime, a.endTime)
+                        const timeB = getDurationMs(b.startTime, b.endTime)
+                        return timeA - timeB
+                    }))
+                    ref.current.close()
+                }
+                else if (json.error) {
+                    if (json.error.username) 
+                        throw json.error.username  
+                    throw json.error
+                }
             }
-            else if (json.error) {
-                if (json.error.username) 
-                    throw json.error.username  
-                throw json.error
+            catch(e) {
+                setError(e.msg ? e.msg : e.message)
             }
-        }
-        catch(e) {
-            setError(e.msg ? e.msg : e.message)
+            finally {
+                setLoading(false)
+            }
         }
     }
 
     function handleClose() {
-        ref.current.close()
-        setToken()
+        if (!loading) {
+            ref.current.close()
+            setToken()
+        }
     }
 
     return (
         <dialog ref={ref} className={styles.dialog}>
             <h3 className={styles.title}>{title}</h3>
+            {loading && <div className={styles.spinner}></div>}
             <div className={styles.body}>
                 <div>
                     <p className={styles.score}>
@@ -74,8 +84,14 @@ export default ({
                     </div>
                 </div>
                 <div className={styles.btnContainer}>
-                    <button onClick={handleClose}>Close</button>
-                    <button onClick={async () => await submitScore()}>Submit</button>
+                    <button 
+                        onClick={handleClose}
+                        disabled={loading}
+                    >Close</button>
+                    <button 
+                        onClick={async () => await submitScore()}
+                        disabled={loading}
+                    >Submit</button>
                 </div>
             </div>
         </dialog>
