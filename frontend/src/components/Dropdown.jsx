@@ -7,11 +7,13 @@ export default ({boxSize, names}) => {
     const submit = useSubmit()
     const [popupLocX, setPopupLocX] = useState()
     const [popupLocY, setPopupLocY] = useState()
+    const [tOrigin, setTOrigin] = useState("center top")
     const dropdownRef = useRef()
     
     useEffect(() => {
         setPopupLocX(normCoord.x > 0.8 ? `- ${dropdownRef.current.scrollWidth}px - ${boxSize/2}vw` : `+ ${boxSize/2}vw`)
         setPopupLocY(normCoord.y > 0.5 ? `- ${dropdownRef.current.scrollHeight}px - ${boxSize/2}vw` : `+ ${boxSize/2}vw`)
+        setTOrigin(normCoord.y > 0.5 ? "center bottom" : "center top")
     }, [])
 
     async function handleClick(name) {
@@ -25,7 +27,8 @@ export default ({boxSize, names}) => {
             className={styles.dropdown}
             style={{
                 left: `calc(${(normCoord.x * imgSize.width)+waldoRef.current.offsetLeft}px ${popupLocX})`,
-                top: `calc(${(normCoord.y * imgSize.height)+waldoRef.current.offsetTop}px ${popupLocY})`
+                top: `calc(${(normCoord.y * imgSize.height)+waldoRef.current.offsetTop}px ${popupLocY})`,
+                transformOrigin: tOrigin
             }}
         >
             <p>Options</p>

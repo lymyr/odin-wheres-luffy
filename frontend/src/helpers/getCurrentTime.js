@@ -1,12 +1,8 @@
 export default (from, to) => {
-    const start = new Date(from).getTime()
-    const end = new Date(to).getTime()
-    
-    const totalSeconds = (end - start) / 1000
+    const totalSeconds = getDurationMs(from, to) / 1000
     const min = Math.floor(totalSeconds / 60)
     const sec = (totalSeconds % 60).toFixed(2)
-    
-    return `${min}m ${sec}s`
+    return min ? `${min}m ${sec}s` : `${sec}s`
 }
 
 export function getDurationMs(from, to) {

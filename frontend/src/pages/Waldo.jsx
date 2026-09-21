@@ -56,10 +56,8 @@ export default () => {
 
     return (
         <>
-            {/* todo: add pictures to header & indicator if person is already found */}
            <Header normCoord={normCoord} tokenData={token?.data}/>
-           
-            <main>
+            <main className={styles.main}>
                 <img 
                     src={oneWally} 
                     className={styles.waldo}
@@ -67,7 +65,7 @@ export default () => {
                     ref={waldoRef}
                 />
                 {
-                    normCoord.x != "N/A" && 
+                    (normCoord.x != "N/A" || normCoord.y != "N/A") && 
                     <BoxContext value={[styles, waldoRef, normCoord, imgSize, resetCoord]}>
                         <BoxClick boxSize={boxSize}/>
                         <Dropdown boxSize={boxSize} names={token?.data.persons} />

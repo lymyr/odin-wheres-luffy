@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
 import getCurrentTime from "../helpers/getCurrentTime.js"
 import styles from "./Header.module.css"
+import getHeaderPictures from "../helpers/getHeaderPictures.js"
 
-export default ({ normCoord, tokenData }) => {
+export default ({ tokenData }) => {
     const [time, setTime] = useState()
+    const picCollection = getHeaderPictures()
+
     useEffect(() => {
         if (tokenData && tokenData.persons.length > 0) {
             const interval = setInterval(() => {
@@ -12,10 +15,9 @@ export default ({ normCoord, tokenData }) => {
             return () => clearInterval(interval)
         }
         else
-            setTime("0.00")
+            setTime("0.00s")
     }, [tokenData])
 
-    
 
     return (
         <header  className={styles.header}>
@@ -26,18 +28,13 @@ export default ({ normCoord, tokenData }) => {
             <ul>
                 {tokenData?.persons.map(name => {
                     return (
-                        // todo: change class name if found
-                        <li className="" key={name.id}>
-                            <img />
+                        <li key={name.id}>
+                            <img src={picCollection[`${name.name}`]?.img}/>
                             <p>{name.name}</p>
                         </li>
                     )
                 })}
-                
             </ul>
-            <div >
-                {normCoord.x}, {normCoord.y}
-            </div>
         </header>
     ) 
 }
