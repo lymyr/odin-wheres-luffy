@@ -20,6 +20,9 @@ export default () => {
         Waldo: {
             img: waldo
         },
+        "Waldo 2": {
+            img: waldo
+        },
         Gaimon: {
             img: gaimon
         },

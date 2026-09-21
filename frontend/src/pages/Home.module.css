@@ -61,6 +61,7 @@
 }
 
 .action button:disabled {
+    cursor: wait;
     background-color: rgb(209, 209, 209);
     transition: 200ms;
 }

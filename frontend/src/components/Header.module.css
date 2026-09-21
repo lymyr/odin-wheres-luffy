@@ -64,9 +64,22 @@
     text-overflow: ellipsis;
 }
 
-@media screen and (max-width: 430px) {
+
+@media screen and (max-width: 480px) {
     .header {
-        --size: 36px;
+        --size: 40px;
+    }
+    .header ul {
+        gap: 12px;
+    }
+    .header li {
+        font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .header {
+        --size: 32px;
     }
     .header ul {
         gap: 8px;

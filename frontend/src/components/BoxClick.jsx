@@ -3,6 +3,7 @@ import BoxContext from "../hooks/BoxContext"
 
 export default ({boxSize=4}) => {
     const [styles, waldoRef, normCoord, imgSize] = useContext(BoxContext)
+    console.log(normCoord)
     return (
         <div 
             className={styles.box}
