@@ -76,7 +76,6 @@ export default () => {
                 }
                 {
                     found.length > 0 && found.map((m, i) => {
-                        console.log(found)
                         return <FoundMarker coords={m.coords} imgSize={imgSize} waldoRef={waldoRef} key={i}/>
                     })
                     

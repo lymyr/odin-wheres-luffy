@@ -19,7 +19,6 @@ export default () => {
             method: "post"
         })
         const json = await res.json()
-        console.log(jwtDecode(json.data.token))
         setToken({
             token: json.data.token,
             data: jwtDecode(json.data.token)
