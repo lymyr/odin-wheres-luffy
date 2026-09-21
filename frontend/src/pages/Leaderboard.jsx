@@ -65,8 +65,11 @@ export default () => {
                                 <h1>Error</h1>
                                 <p>{error}</p>
                             </div>
-                        :
-                            <ol>
+                        : leaderboard.length == 0 ?
+                            <div>
+                                <p>No record found...</p>
+                            </div>
+                            : <ol>
                             {
                                 leaderboard.map(row => {
                                     return (

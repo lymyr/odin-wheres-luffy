@@ -42,6 +42,24 @@ async function seed() {
                 xMaxPos: 0.32,
                 yMinPos: 0.81,
                 yMaxPos: 0.85
+            },
+            {
+                id: 5,
+                name: "Gaimon",
+                gameId: 1,
+                xMinPos: 0.094,
+                xMaxPos: 0.145,
+                yMinPos: 0.856,
+                yMaxPos: 0.936
+            },
+            {
+                id: 6,
+                name: "Bartolomeo",
+                gameId: 1,
+                xMinPos: 0.795,
+                xMaxPos: 0.845,
+                yMinPos: 0.221,
+                yMaxPos: 0.301
             }
         ]})
     ])
