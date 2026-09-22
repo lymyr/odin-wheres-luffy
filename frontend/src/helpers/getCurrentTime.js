@@ -6,5 +6,6 @@ export default (from, to) => {
 }
 
 export function getDurationMs(from, to) {
-    return new Date(to).getTime() - new Date(from).getTime()
+    const total = new Date(to).getTime() - new Date(from).getTime()
+    return total < 0 ? 0 : total
 }
