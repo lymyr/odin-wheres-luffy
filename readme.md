@@ -1,5 +1,7 @@
 # todo: revise later
-
+## deployment
+- Frontend: https://wheresluffy.netlify.app
+- Backend: https://odin-wheres-luffy.onrender.com
 ## backend
 ### details
 - Integration and unit testing via Supertest and Jest
