@@ -7,8 +7,7 @@ export const getStartGame = (req, res) => {
     const token = jwt.sign({
         startTime,
         gameId: req.game.id,
-        persons: req.game.persons,
-        sessionId: req.sessionID
+        persons: req.game.persons
     }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
     res.json({

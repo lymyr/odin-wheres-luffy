@@ -1,19 +1,10 @@
 import express from "express"
-import session from "express-session"
 import indexRouter from "./routes/indexRouter.js"
 import cors from "cors"
 
 process.loadEnvFile()
 
 const app = express()
-app.use(session({
-    cookie: {
-        maxAge: 1000*60*60*24,
-    },
-    resave: false,
-    secret: process.env.SESSION_SECRET,
-    saveUninitialized: true
-}))
 
 const corsOptions = process.env.ORIGINS ? 
     { origin: process.env.ORIGINS.split(",") } : { origin: "*" }

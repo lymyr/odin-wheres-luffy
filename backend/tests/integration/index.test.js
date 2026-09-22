@@ -43,7 +43,6 @@ test("returns JWT with startDate, gameId, and sessionId", async () => {
         startTime: new Date(),
         gameId: expect.anything(),
         persons: expect.any(Array),
-        sessionId: expect.anything()
     }, expect.anything(), expect.anything())
 
     expect(res.body).toEqual({
