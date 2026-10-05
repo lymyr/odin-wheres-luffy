@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import BoxContext from "../hooks/BoxContext.js"
 import useSubmit from "../hooks/useSubmit.js"
 
-export default ({boxSize, names, setFound, found}) => {
+export default ({boxSize, persons, setFound, found}) => {
     const [styles, waldoRef, normCoord, imgSize, resetCoord] = useContext(BoxContext)
     const submit = useSubmit()
     const [loading, setLoading] = useState(false)
@@ -17,11 +17,11 @@ export default ({boxSize, names, setFound, found}) => {
         setTOrigin(normCoord.y > 0.5 ? "center bottom" : "center top")
     }, [])
 
-    async function handleClick(name) {
+    async function handleClick(person) {
         if (!loading) {
             setLoading(true)
-            const data = await submit(normCoord, name)
-            if (data.persons.length < names.length) 
+            const data = await submit(normCoord, person)
+            if (data.persons.length < persons.length) 
                 setFound([...found, { coords: normCoord }]);
             setLoading(false)
             resetCoord()
@@ -40,12 +40,12 @@ export default ({boxSize, names, setFound, found}) => {
         >
             <p>Options</p>
             <ul>
-                {names.map(name => {
+                {persons.map(person => {
                     return <li 
-                        key={name.name} 
-                        onClick={async () => handleClick(name.name)}
+                        key={person.id} 
+                        onClick={async () => handleClick(person)}
                         className={loading ? styles.dropdownLoading : undefined}
-                    >{name.name}</li>
+                    >{person.name}</li>
                 })}
             </ul>
         </div>

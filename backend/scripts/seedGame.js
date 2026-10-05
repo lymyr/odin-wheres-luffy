@@ -45,7 +45,7 @@ async function seed() {
             },
             {
                 id: 5,
-                name: "Waldo 2",
+                name: "Waldo",
                 gameId: 1,
                 xMinPos: 0.766,
                 xMaxPos: 0.803,

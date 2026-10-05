@@ -31,6 +31,7 @@
     will-change: opacity, transform;
     box-shadow: 1px 1px 4px black;
     border-radius: 2px;
+    z-index: 2;
 }
 
 
@@ -44,6 +45,7 @@
         open 100ms ease-out, 
         fade 70ms ease-out;
     box-shadow: 1px 1px 4px black;
+    z-index: 2;
 }
 
 .dropdown ul,

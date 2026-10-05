@@ -26,11 +26,11 @@ export default ({ tokenData }) => {
                 <p>{time}</p>
             </div>
             <ul>
-                {tokenData?.persons.map(name => {
+                {tokenData?.persons.map(person => {
                     return (
-                        <li key={name.id}>
-                            <img src={picCollection[`${name.name}`]?.img}/>
-                            <p>{name.name}</p>
+                        <li key={person.id}>
+                            <img src={picCollection[`${person.name}`]?.img}/>
+                            <p>{person.name}</p>
                         </li>
                     )
                 })}

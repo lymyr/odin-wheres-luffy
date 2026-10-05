@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react"
-import oneWally from "../assets/oneWally.png"
+import oneWally from "../assets/oneWally.webp"
 import styles from "./Waldo.module.css"
 import { useState } from "react"
 import BoxClick from "../components/BoxClick"
@@ -71,7 +71,7 @@ export default () => {
                     (normCoord.x != "N/A" || normCoord.y != "N/A") && 
                     <BoxContext value={[styles, waldoRef, normCoord, imgSize, resetCoord]}>
                         <BoxClick boxSize={boxSize}/>
-                        <Dropdown boxSize={boxSize} names={token?.data.persons} setFound={setFound} found={found}/>
+                        <Dropdown boxSize={boxSize} persons={token?.data.persons} setFound={setFound} found={found}/>
                     </BoxContext>
                 }
                 {

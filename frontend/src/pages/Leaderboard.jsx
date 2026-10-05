@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useContext } from "react"
 import getCurrentTime from "../helpers/getCurrentTime"
-import img from "../assets/oneWally.png"
+import img from "../assets/oneWally.webp"
 import Dialog from "../components/Dialog"
 import TokenContext from "../hooks/TokenContext"
 import styles from "./Leaderboard.module.css"
