@@ -59,7 +59,7 @@ export default () => {
 
     return (
         <>
-           <Header normCoord={normCoord} tokenData={token?.data}/>
+           <Header normCoord={normCoord} token={token}/>
             <main className={styles.main}>
                 <img 
                     src={oneWally} 

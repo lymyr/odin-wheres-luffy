@@ -65,6 +65,12 @@
 }
 
 
+.header div.error p {
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    text-transform: lowercase;
+    color: rgb(227, 102, 102);
+}
+
 @media screen and (max-width: 480px) {
     .header {
         --size: 40px;

@@ -51,6 +51,10 @@
     z-index: 2;
 }
 
+.dropdownError {
+    background-color: rgb(96, 40, 40);
+}
+
 .dropdown ul,
 .dropdown li {
     list-style: none;

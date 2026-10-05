@@ -1,9 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import BoxContext from "../hooks/BoxContext.js"
 import useSubmit from "../hooks/useSubmit.js"
+import TokenContext from "../hooks/TokenContext.js"
 
 export default ({boxSize, persons, setFound, found}) => {
     const [styles, waldoRef, normCoord, imgSize, resetCoord] = useContext(BoxContext)
+    const [token] = useContext(TokenContext)
     const submit = useSubmit()
     const [loading, setLoading] = useState(false)
     const [popupLocX, setPopupLocX] = useState()
@@ -21,17 +23,19 @@ export default ({boxSize, persons, setFound, found}) => {
         if (!loading) {
             setLoading(true)
             const data = await submit(normCoord, person)
-            if (data.persons.length < persons.length) 
-                setFound([...found, { coords: normCoord }]);
+            if (data) {
+                if (data.persons.length < persons.length) 
+                    setFound([...found, { coords: normCoord }]);
+                resetCoord()
+            }
             setLoading(false)
-            resetCoord()
         }
     }
 
     return (
         <div 
             ref={dropdownRef}
-            className={styles.dropdown}
+            className={token.error ? `${styles.dropdown} ${styles.dropdownError}` : styles.dropdown}
             style={{
                 left: `calc(${(normCoord.x * imgSize.width)+waldoRef.current.offsetLeft}px ${popupLocX})`,
                 top: `calc(${(normCoord.y * imgSize.height)+waldoRef.current.offsetTop}px ${popupLocY})`,
