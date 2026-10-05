@@ -1,7 +1,7 @@
 import { prisma } from "../lib/prisma.js"
 
 async function seed() {
-    await prisma.$transaction([
+    const transactionTasks = [
         prisma.game.create({ data: {
             id: 1,
             name: "Where's Luffy"
@@ -71,7 +71,13 @@ async function seed() {
                 yMaxPos: 0.301
             }
         ]})
-    ])
+    ]
+
+    if (process.argv[2] == 'resetPersons') {
+        transactionTasks[0] = prisma.person.deleteMany()
+    }
+
+    await prisma.$transaction(transactionTasks)
 }
 
 try {
